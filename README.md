@@ -24,8 +24,8 @@ supported ABI and the Java decoder API.
 
 ## Provenance
 
-The upstream Opus source is vendored at `third_party/opus`; its source
-repository and pinned commit are recorded in
+The upstream Opus source is integrated as a Git subtree at `third_party/opus`;
+its source repository and pinned commit are recorded in
 [`third_party/opus/UPSTREAM.json`](third_party/opus/UPSTREAM.json). JNI source
 is maintained at `opus-sdk/src/main/cpp/opus_jni.c`.
 
