@@ -6,4 +6,4 @@ Mark Borgerding, Erik de Castro Lopo, Mozilla, Amazon.
 
 The complete three-clause BSD license conditions and disclaimer are included
 in META-INF/LICENSE-opus.txt. Source provenance is documented in the SDK
-source repository under third_party/opus/UPSTREAM.json.
+source repository under third_party/opus-UPSTREAM.json.

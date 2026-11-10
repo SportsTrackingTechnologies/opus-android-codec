@@ -15,7 +15,7 @@
 | minSdk | 24 |
 | ABI | `arm64-v8a`, `armeabi-v7a`, `x86_64` |
 
-The Opus subtree snapshot is recorded in `third_party/opus/UPSTREAM.json`.
+The Opus subtree snapshot is recorded in `third_party/opus-UPSTREAM.json`.
 Its commit and source state must be updated in the same commit as any upstream
 source upgrade.
 

@@ -2,8 +2,8 @@ cmake_minimum_required(VERSION 3.16)
 
 project(opus_android_jni LANGUAGES C)
 
-# The pinned, vendored upstream source is part of this repository. Its exact
-# upstream repository and commit are recorded in third_party/opus/UPSTREAM.json.
+# The pinned upstream source is part of this repository as a Git subtree. Its
+# exact upstream repository and commit are recorded in third_party/opus-UPSTREAM.json.
 get_filename_component(OPUS_SOURCE_DIR
         "${CMAKE_CURRENT_LIST_DIR}/../../../../third_party/opus" ABSOLUTE)
 if(NOT EXISTS "${OPUS_SOURCE_DIR}/CMakeLists.txt")
