@@ -15,11 +15,18 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
-      - uses: android-actions/setup-android@v3
       - name: Install Android native build tools
         shell: pwsh
         run: |
-          sdkmanager --install "platforms;android-36" "build-tools;36.0.0" "ndk;30.0.16248370" "cmake;3.22.1"
+          $sdkRoot = if ($env:ANDROID_HOME) { $env:ANDROID_HOME } else { $env:ANDROID_SDK_ROOT }
+          if (-not $sdkRoot) { throw "ANDROID_HOME or ANDROID_SDK_ROOT is not set" }
+          $sdkManager = Get-ChildItem -Path "$sdkRoot\cmdline-tools" -Filter sdkmanager.bat -Recurse |
+            Select-Object -First 1 -ExpandProperty FullName
+          if (-not $sdkManager) { throw "sdkmanager.bat was not found under $sdkRoot" }
+          1..50 | ForEach-Object { "y" } | & $sdkManager --licenses
+          if ($LASTEXITCODE -ne 0) { throw "Android SDK license acceptance failed" }
+          & $sdkManager --install "platforms;android-36" "build-tools;36.0.0" "ndk;30.0.16248370" "cmake;3.22.1"
+          if ($LASTEXITCODE -ne 0) { throw "Android native tool installation failed" }
       - name: Build and verify AAR
         shell: pwsh
         run: .\scripts\build-aar.ps1
@@ -27,5 +34,5 @@ jobs:
         with:
           name: opus-android-sdk
           path: |
-            artifacts/opus-android-sdk.aar
-            artifacts/opus-android-sdk.aar.sha256
+            artifacts/*.aar
+            artifacts/*.aar.sha256
