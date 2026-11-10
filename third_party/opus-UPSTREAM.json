@@ -1,8 +1,8 @@
 {
-  "name": "Opus",
-  "repository": "https://github.com/xiph/opus.git",
-  "commit": "677070ed0c35fc52a634f4be845aa426ea3a1689",
-  "describe": "okv1.6.1-96-g677070ed",
-  "integration": "git subtree --squash",
-  "licenseFile": "COPYING"
+    "name":  "Opus",
+    "repository":  "https://github.com/xiph/opus.git",
+    "commit":  "677070ed0c35fc52a634f4be845aa426ea3a1689",
+    "describe":  "1.6.1-96-g677070ed0",
+    "integration":  "git subtree --squash",
+    "licenseFile":  "COPYING"
 }

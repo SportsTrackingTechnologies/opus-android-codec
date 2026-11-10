@@ -6,12 +6,15 @@ param(
 $ErrorActionPreference = 'Stop'
 $repoRoot = Split-Path -Parent $PSScriptRoot
 Set-Location $repoRoot
-$versionLine = Select-String -LiteralPath (Join-Path $repoRoot 'gradle.properties') -Pattern '^opusSdkVersion=(.+)$' |
+$propertiesPath = Join-Path $repoRoot 'gradle.properties'
+$upstreamVersionLine = Select-String -LiteralPath $propertiesPath -Pattern '^opusUpstreamDescribe=(.+)$' |
     Select-Object -First 1
-if ($null -eq $versionLine) {
-    throw 'opusSdkVersion is missing from gradle.properties'
+$revisionLine = Select-String -LiteralPath $propertiesPath -Pattern '^opusWrapperRevision=(.+)$' |
+    Select-Object -First 1
+if ($null -eq $upstreamVersionLine -or $null -eq $revisionLine) {
+    throw 'opusUpstreamDescribe or opusWrapperRevision is missing from gradle.properties'
 }
-$sdkVersion = $versionLine.Matches[0].Groups[1].Value.Trim()
+$sdkVersion = "{0}-r{1}" -f $upstreamVersionLine.Matches[0].Groups[1].Value.Trim(), $revisionLine.Matches[0].Groups[1].Value.Trim()
 
 if (-not $SkipClean) {
     & .\gradlew.bat :opus-sdk:clean --no-daemon --max-workers=1

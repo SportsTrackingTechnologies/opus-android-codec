@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "com.stt.opus"
-version = providers.gradleProperty("opusSdkVersion").get()
+version = "${providers.gradleProperty("opusUpstreamDescribe").get()}-r${providers.gradleProperty("opusWrapperRevision").get()}"
 
 android {
     // Must differ from the consuming application's namespace. The public
