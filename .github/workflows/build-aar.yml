@@ -1,0 +1,31 @@
+name: Build AAR
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+    tags: ['v*']
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: android-actions/setup-android@v3
+      - name: Install Android native build tools
+        shell: pwsh
+        run: |
+          sdkmanager --install "platforms;android-36" "build-tools;36.0.0" "ndk;30.0.16248370" "cmake;3.22.1"
+      - name: Build and verify AAR
+        shell: pwsh
+        run: .\scripts\build-aar.ps1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: opus-android-sdk
+          path: |
+            artifacts/opus-android-sdk.aar
+            artifacts/opus-android-sdk.aar.sha256

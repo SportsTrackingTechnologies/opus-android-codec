@@ -1,0 +1,11 @@
+This repository includes the Opus reference implementation under
+third_party/opus.
+
+Copyright 2001-2023 Xiph.Org, Skype Limited, Octasic,
+Jean-Marc Valin, Timothy B. Terriberry, CSIRO, Gregory Maxwell,
+Mark Borgerding, Erik de Castro Lopo, Mozilla, Amazon.
+
+The complete three-clause BSD license, redistribution conditions, and
+disclaimer are retained verbatim in third_party/opus/COPYING and in the AAR
+at META-INF/LICENSE-opus.txt. See licenses/opus/NOTICE.md for distribution
+requirements.
