@@ -5,19 +5,22 @@ implementation and a small JNI decoder wrapper.
 
 ## Build
 
-Install the versions in [docs/BUILDING.md](docs/BUILDING.md), then run:
+From the repository root, install the versions in
+[docs/BUILDING.md](docs/BUILDING.md), then run the script with PowerShell 7+
+(Windows PowerShell 5.1 is also supported):
 
 ```powershell
 .\scripts\build-aar.ps1
 ```
 
 The output is `artifacts/opus-android-sdk-<version>.aar`, accompanied by a
-SHA-256 checksum. The SDK ships `arm64-v8a`, `armeabi-v7a`, and `x86_64` native
-libraries. This ABI set intentionally excludes 32-bit `x86`; `x86_64` is kept
-for 64-bit emulator coverage. The build verification also checks 16 KB ELF LOAD
-alignment for the 64-bit native libraries (`arm64-v8a` and `x86_64`). This AAR
-check does not replace final APK/AAB ZIP-alignment validation by each consuming
-application.
+SHA-256 checksum file. Use the checksum to verify the integrity of a downloaded
+AAR before integration. The SDK ships `arm64-v8a`, `armeabi-v7a`, and `x86_64`
+native libraries. This ABI set intentionally excludes 32-bit `x86`; `x86_64` is
+kept for 64-bit emulator coverage. The build verification also checks 16 KB ELF
+LOAD alignment for the 64-bit native libraries (`arm64-v8a` and `x86_64`). This
+AAR check does not replace final APK/AAB ZIP-alignment validation by each
+consuming application.
 
 The supported ABI set is defined by the Android library and native build
 configurations. Update the relevant Gradle, CMake/native build, and verification
