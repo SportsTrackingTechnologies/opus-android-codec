@@ -19,7 +19,10 @@
    Versions ending in `-SNAPSHOT` are routed to the snapshot repository; use
    `-PopusPublishVersion=<derived-version>-SNAPSHOT` only for non-release
    validation builds.
-   For CI publication, create `ARTIFACTORY_USER` and `ARTIFACTORY_PASSWORD`
-   repository or organization secrets before pushing the release tag. The
-   GitHub Actions workflow publishes only after its Build AAR job succeeds.
+   The local user Gradle properties must provide `artifactory_contextUrl`,
+   `artifactory_user`, and `artifactory_password`. For CI publication, create
+   `ARTIFACTORY_USER` and `ARTIFACTORY_PASSWORD` repository or organization
+   secrets plus an `ARTIFACTORY_CONTEXT_URL` Actions Variable before pushing
+   the release tag. The GitHub Actions workflow publishes only after its Build
+   AAR job succeeds.
 8. Update the consumer application only to the released Maven coordinate.

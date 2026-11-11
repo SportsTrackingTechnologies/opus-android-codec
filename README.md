@@ -21,9 +21,11 @@ The SDK is published to the company JFrog Artifactory Maven repository. Its
 default coordinate is derived from the pinned Opus source, for example:
 
 ```kotlin
+val artifactoryContextUrl = providers.gradleProperty("artifactory_contextUrl").get()
+
 repositories {
     maven {
-        url = uri("https://sally01.jfrog.io/sally01/amersports-release-local")
+        url = uri("$artifactoryContextUrl/amersports-release-local")
         credentials {
             username = providers.gradleProperty("artifactory_user").orNull
             password = providers.gradleProperty("artifactory_password").orNull
@@ -37,9 +39,17 @@ dependencies {
 ```
 
 Repository credentials belong in the developer's `~/.gradle/gradle.properties`
-or CI secrets, never in this repository. Release versions publish to
-`amersports-release-local`; versions ending in `-SNAPSHOT` publish to
-`amersports-snapshot-local`.
+or CI configuration, never in this repository. Configure the local file as
+follows (use the company-provided credentials):
+
+```properties
+artifactory_contextUrl=https\://sally01.jfrog.io/sally01
+artifactory_user=...
+artifactory_password=...
+```
+
+Release versions publish to `amersports-release-local`; versions ending in
+`-SNAPSHOT` publish to `amersports-snapshot-local`.
 
 To publish a release after validation:
 
@@ -48,8 +58,10 @@ To publish a release after validation:
 ```
 
 For tag-based CI publishing, configure repository or organization secrets
-`ARTIFACTORY_USER` and `ARTIFACTORY_PASSWORD`. A pushed `v*` tag first runs the
-release build and AAR verification, then publishes only if that build succeeds.
+`ARTIFACTORY_USER` and `ARTIFACTORY_PASSWORD`, plus an
+`ARTIFACTORY_CONTEXT_URL` GitHub Actions Variable. A pushed `v*` tag first runs
+the release build and AAR verification, then publishes only if that build
+succeeds.
 
 ## Provenance
 

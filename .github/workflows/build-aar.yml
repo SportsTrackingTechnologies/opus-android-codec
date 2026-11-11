@@ -6,6 +6,9 @@ on:
     branches: [main]
     tags: ['v*']
 
+env:
+  ORG_GRADLE_PROJECT_artifactory_contextUrl: ${{ vars.ARTIFACTORY_CONTEXT_URL }}
+
 jobs:
   build:
     runs-on: windows-latest
