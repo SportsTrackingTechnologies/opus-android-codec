@@ -10,19 +10,16 @@
 4. Build with `scripts/build-aar.ps1` on a clean checkout.
 5. Run `scripts/verify-aar.ps1` and preserve the printed SHA-256.
 6. Tag the exact SDK repository commit as `v<opus-upstream-describe>-rN`.
-7. Publish the release AAR to the company JFrog repository:
+7. Push the exact release tag to trigger GitHub Actions publication:
 
    ```powershell
-   .\gradlew.bat :opus-sdk:publishReleasePublicationToJfrogRepository
+   rtk proxy git tag v<opus-upstream-describe>-rN
+   rtk proxy git push origin v<opus-upstream-describe>-rN
    ```
 
-   Versions ending in `-SNAPSHOT` are routed to the snapshot repository; use
-   `-PopusPublishVersion=<derived-version>-SNAPSHOT` only for non-release
-   validation builds.
-   The local user Gradle properties must provide `artifactory_contextUrl`,
-   `artifactory_user`, and `artifactory_password`. For CI publication, create
-   `ARTIFACTORY_USER` and `ARTIFACTORY_PASSWORD` repository or organization
-   secrets plus an `ARTIFACTORY_CONTEXT_URL` Actions Variable before pushing
-   the release tag. The GitHub Actions workflow publishes only after its Build
-   AAR job succeeds.
+   The workflow first runs `Build AAR`, then publishes the release AAR to JFrog
+   only if that job succeeds. It requires one-time administrator configuration:
+   `ARTIFACTORY_USER` and `ARTIFACTORY_PASSWORD` Actions Secrets, plus the
+   `ARTIFACTORY_CONTEXT_URL` Actions Variable. Do not use local publishing as
+   the normal release mechanism.
 8. Update the consumer application only to the released Maven coordinate.
