@@ -30,6 +30,14 @@ android {
         ndk {
             abiFilters += listOf("arm64-v8a", "armeabi-v7a", "x86_64")
         }
+
+        externalNativeBuild {
+            cmake {
+                // Keep the native Opus metadata aligned with the pinned
+                // subtree version used for the published AAR.
+                arguments += "-DOPUS_PACKAGE_VERSION=${providers.gradleProperty("opusUpstreamDescribe").get()}"
+            }
+        }
     }
 
     ndkVersion = providers.gradleProperty("opusNdkVersion").get()

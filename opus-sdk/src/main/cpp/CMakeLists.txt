@@ -14,9 +14,13 @@ endif()
 # another shared library. Build its official target as a shared library and
 # package it alongside the JNI facade to retain the optimized kernels.
 set(OPUS_BUILD_SHARED_LIBRARY ON CACHE BOOL "" FORCE)
-# The vendored source intentionally has no .git directory. Keep its upstream
-# describe value in sync with third_party/opus/UPSTREAM.json.
-set(OPUS_PACKAGE_VERSION "1.6.1-96-g677070ed" CACHE STRING "" FORCE)
+# The vendored source intentionally has no .git directory. Gradle passes this
+# value from opusUpstreamDescribe, which is synchronized with the pinned
+# subtree commit by scripts/sync-opus-version.ps1. Keep a standalone-CMake
+# fallback without overriding the Gradle-provided cache value.
+if(NOT DEFINED OPUS_PACKAGE_VERSION)
+    set(OPUS_PACKAGE_VERSION "unknown" CACHE STRING "Pinned Opus source version")
+endif()
 set(OPUS_BUILD_TESTING OFF CACHE BOOL "" FORCE)
 set(OPUS_BUILD_PROGRAMS OFF CACHE BOOL "" FORCE)
 set(OPUS_INSTALL_PKG_CONFIG_MODULE OFF CACHE BOOL "" FORCE)
