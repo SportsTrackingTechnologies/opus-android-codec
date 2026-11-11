@@ -17,10 +17,39 @@ libraries. Edit `opus-sdk/build.gradle.kts` if the supported ABI set changes.
 
 ## Maven consumption
 
-This repository is prepared for JitPack. Create and push an immutable Git tag,
-then use the JitPack coordinate displayed for that tag. The published Android
-artifact is `opus-android-sdk`; it contains both JNI shared libraries for each
-supported ABI and the Java decoder API.
+The SDK is published to the company JFrog Artifactory Maven repository. Its
+default coordinate is derived from the pinned Opus source, for example:
+
+```kotlin
+repositories {
+    maven {
+        url = uri("https://sally01.jfrog.io/sally01/amersports-release-local")
+        credentials {
+            username = providers.gradleProperty("artifactory_user").orNull
+            password = providers.gradleProperty("artifactory_password").orNull
+        }
+    }
+}
+
+dependencies {
+    implementation("com.stt.opus:opus-android-sdk:1.6.1-96-g677070ed0-r5")
+}
+```
+
+Repository credentials belong in the developer's `~/.gradle/gradle.properties`
+or CI secrets, never in this repository. Release versions publish to
+`amersports-release-local`; versions ending in `-SNAPSHOT` publish to
+`amersports-snapshot-local`.
+
+To publish a release after validation:
+
+```powershell
+.\gradlew.bat :opus-sdk:publishReleasePublicationToJfrogRepository
+```
+
+For tag-based CI publishing, configure repository or organization secrets
+`ARTIFACTORY_USER` and `ARTIFACTORY_PASSWORD`. A pushed `v*` tag first runs the
+release build and AAR verification, then publishes only if that build succeeds.
 
 ## Provenance
 
@@ -32,6 +61,7 @@ is maintained at `opus-sdk/src/main/cpp/opus_jni.c`.
 ## License
 
 Opus is redistributed under its three-clause BSD license. See
-[`NOTICE`](NOTICE), [`third_party/opus/COPYING`](third_party/opus/COPYING), and
+[`LICENSE`](LICENSE), [`NOTICE`](NOTICE),
+[`third_party/opus/COPYING`](third_party/opus/COPYING), and
 [`licenses/opus/NOTICE.md`](licenses/opus/NOTICE.md). Products distributing the
 AAR must include the applicable notice in their open-source notices.

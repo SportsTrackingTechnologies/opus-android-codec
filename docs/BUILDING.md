@@ -6,7 +6,7 @@
 | --- | --- |
 | Opus upstream | `https://github.com/xiph/opus.git` |
 | Opus commit | `677070ed0c35fc52a634f4be845aa426ea3a1689` |
-| Opus describe | `okv1.6.1-96-g677070ed` |
+| Opus describe | `1.6.1-96-g677070ed0` |
 | Android NDK | `30.0.16248370` |
 | CMake | `3.22.1` |
 | Gradle | `9.5.0` |
@@ -34,5 +34,6 @@ Install the exact NDK and CMake above through Android SDK Manager, then run:
 .\scripts\build-aar.ps1
 ```
 
-The artifact is written to `artifacts/opus-android-sdk-<opusSdkVersion>.aar`.
+The artifact is written to
+`artifacts/opus-android-sdk-<opus-upstream-describe>-rN.aar`.
 Run `scripts/verify-aar.ps1` to verify the ABI set and emit a SHA-256 checksum.

@@ -2,7 +2,8 @@
 
 The Opus source under `third_party/opus` is redistributed under the upstream
 three-clause BSD license. The authoritative license text included with this
-repository is `third_party/opus/COPYING`.
+repository is `third_party/opus/COPYING`; a distribution copy is also provided
+at `LICENSE`.
 
 For every binary AAR or application distribution containing this SDK:
 

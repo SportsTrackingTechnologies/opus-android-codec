@@ -1,7 +1,7 @@
 # Opus Android SDK
 
-This Android library builds the adjacent official source checkout at
-`D:/7006/AndroidProject/opus` with NDK `30.0.16248370` and CMake `3.22.1`.
+This Android library builds the pinned official Opus Git subtree at
+`third_party/opus` with NDK `30.0.16248370` and CMake `3.22.1`.
 
 Build the release AAR from the repository root:
 
@@ -23,8 +23,9 @@ dependencies {
 }
 ```
 
-For an external project, copy the generated AAR into its `libs/` directory and
-add it as an AAR dependency.
+For an external project, consume the published Maven coordinate documented in
+the repository root README. Copying a local AAR remains useful for temporary
+integration testing only.
 
 ## Decode a 20 ms frame at 48 kHz
 

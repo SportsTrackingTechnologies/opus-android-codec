@@ -3,14 +3,11 @@ plugins {
     `maven-publish`
 }
 
-// Keep the normal local/repository coordinate, but honor JitPack's injected
-// group so consumers can resolve com.github.cz-2641:opus-android-sdk:<tag>.
-group = providers.gradleProperty("group").getOrElse("com.stt.opus")
+// Keep the default coordinate stable for the company Maven repository. A
+// deliberate override is available for approved snapshot/release workflows.
+group = providers.gradleProperty("opusMavenGroup").getOrElse("com.stt.opus")
 val derivedVersion = "${providers.gradleProperty("opusUpstreamDescribe").get()}-r${providers.gradleProperty("opusWrapperRevision").get()}"
-// JitPack supplies the requested Git tag through VERSION (or -Pversion). Use
-// it for the published POM so its Maven coordinate matches the immutable tag.
-version = providers.gradleProperty("version")
-    .orElse(providers.environmentVariable("VERSION"))
+version = providers.gradleProperty("opusPublishVersion")
     .getOrElse(derivedVersion)
 
 android {
@@ -75,6 +72,45 @@ afterEvaluate {
             register<MavenPublication>("release") {
                 from(components["release"])
                 artifactId = "opus-android-sdk"
+                pom {
+                    name.set("Opus Android SDK")
+                    description.set("Android AAR packaging of pinned Opus source with a JNI decoder API.")
+                    url.set("https://github.com/SportsTrackingTechnologies/AndroidOpus")
+                    licenses {
+                        license {
+                            name.set("BSD 3-Clause License (Opus)")
+                            url.set("https://opus-codec.org/license/")
+                            distribution.set("repo")
+                        }
+                    }
+                    scm {
+                        connection.set("scm:git:https://github.com/SportsTrackingTechnologies/AndroidOpus.git")
+                        developerConnection.set("scm:git:ssh://git@github.com/SportsTrackingTechnologies/AndroidOpus.git")
+                        url.set("https://github.com/SportsTrackingTechnologies/AndroidOpus")
+                    }
+                }
+            }
+        }
+    }
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "jfrog"
+            val repositoryBaseUrl = "https://sally01.jfrog.io/sally01"
+            val releaseRepositoryUrl = "$repositoryBaseUrl/amersports-release-local"
+            val snapshotRepositoryUrl = "$repositoryBaseUrl/amersports-snapshot-local"
+            url = uri(
+                if (version.toString().endsWith("-SNAPSHOT", ignoreCase = true)) {
+                    snapshotRepositoryUrl
+                } else {
+                    releaseRepositoryUrl
+                }
+            )
+            credentials {
+                username = providers.gradleProperty("artifactory_user").orNull
+                password = providers.gradleProperty("artifactory_password").orNull
             }
         }
     }

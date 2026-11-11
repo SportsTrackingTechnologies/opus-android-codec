@@ -4,12 +4,22 @@
    the official Opus describe value and updates pinned provenance metadata.
 2. Increase `opusWrapperRevision` in `gradle.properties` if JNI or packaging
    changes without an Opus source update. The AAR version is derived as
-   `<opus-upstream-describe>-rN`, for example `1.6.1-96-g677070ed0-r4`.
-2. If updating Opus, update the vendored source, `UPSTREAM.json`, this
+   `<opus-upstream-describe>-rN`, for example `1.6.1-96-g677070ed0-r5`.
+3. If updating Opus, update the vendored source, `UPSTREAM.json`, this
    project's tests, and `docs/BUILDING.md` together.
-3. Build with `scripts/build-aar.ps1` on a clean checkout.
-4. Run `scripts/verify-aar.ps1` and preserve the printed SHA-256.
-5. Tag the exact SDK repository commit as `v<opusSdkVersion>`.
-6. Attach the AAR, SHA-256 file, build log, and SBOM to the release or publish
-   them to the approved Maven registry.
-7. Update the consumer application only to the released Maven coordinate.
+4. Build with `scripts/build-aar.ps1` on a clean checkout.
+5. Run `scripts/verify-aar.ps1` and preserve the printed SHA-256.
+6. Tag the exact SDK repository commit as `v<opus-upstream-describe>-rN`.
+7. Publish the release AAR to the company JFrog repository:
+
+   ```powershell
+   .\gradlew.bat :opus-sdk:publishReleasePublicationToJfrogRepository
+   ```
+
+   Versions ending in `-SNAPSHOT` are routed to the snapshot repository; use
+   `-PopusPublishVersion=<derived-version>-SNAPSHOT` only for non-release
+   validation builds.
+   For CI publication, create `ARTIFACTORY_USER` and `ARTIFACTORY_PASSWORD`
+   repository or organization secrets before pushing the release tag. The
+   GitHub Actions workflow publishes only after its Build AAR job succeeds.
+8. Update the consumer application only to the released Maven coordinate.

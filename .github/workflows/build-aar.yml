@@ -36,3 +36,33 @@ jobs:
           path: |
             artifacts/*.aar
             artifacts/*.aar.sha256
+
+  publish-jfrog:
+    name: Publish release to JFrog
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: windows-latest
+    env:
+      ORG_GRADLE_PROJECT_artifactory_user: ${{ secrets.ARTIFACTORY_USER }}
+      ORG_GRADLE_PROJECT_artifactory_password: ${{ secrets.ARTIFACTORY_PASSWORD }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Install Android native build tools
+        shell: pwsh
+        run: |
+          $sdkRoot = if ($env:ANDROID_HOME) { $env:ANDROID_HOME } else { $env:ANDROID_SDK_ROOT }
+          if (-not $sdkRoot) { throw "ANDROID_HOME or ANDROID_SDK_ROOT is not set" }
+          $sdkManager = Get-ChildItem -Path "$sdkRoot\cmdline-tools" -Filter sdkmanager.bat -Recurse |
+            Select-Object -First 1 -ExpandProperty FullName
+          if (-not $sdkManager) { throw "sdkmanager.bat was not found under $sdkRoot" }
+          1..50 | ForEach-Object { "y" } | & $sdkManager --licenses
+          if ($LASTEXITCODE -ne 0) { throw "Android SDK license acceptance failed" }
+          & $sdkManager --install "platforms;android-36" "build-tools;36.0.0" "ndk;30.0.16248370" "cmake;3.22.1"
+          if ($LASTEXITCODE -ne 0) { throw "Android native tool installation failed" }
+      - name: Publish release AAR
+        shell: pwsh
+        run: .\gradlew.bat :opus-sdk:publishReleasePublicationToJfrogRepository --no-daemon --max-workers=1

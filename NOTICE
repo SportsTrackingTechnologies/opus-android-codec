@@ -6,6 +6,6 @@ Jean-Marc Valin, Timothy B. Terriberry, CSIRO, Gregory Maxwell,
 Mark Borgerding, Erik de Castro Lopo, Mozilla, Amazon.
 
 The complete three-clause BSD license, redistribution conditions, and
-disclaimer are retained verbatim in third_party/opus/COPYING and in the AAR
-at META-INF/LICENSE-opus.txt. See licenses/opus/NOTICE.md for distribution
-requirements.
+disclaimer are retained verbatim in LICENSE, third_party/opus/COPYING, and in
+the AAR at META-INF/LICENSE-opus.txt. See licenses/opus/NOTICE.md for
+distribution requirements.

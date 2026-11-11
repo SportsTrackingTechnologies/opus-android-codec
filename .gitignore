@@ -17,3 +17,7 @@
 local.properties
 .native-build/
 artifacts/
+
+# Local publishing credentials must never enter version control. Prefer
+# ~/.gradle/gradle.properties or CI secrets for Artifactory credentials.
+publish.local.properties
