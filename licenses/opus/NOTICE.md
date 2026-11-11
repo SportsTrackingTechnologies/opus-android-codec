@@ -14,3 +14,7 @@ For every binary AAR or application distribution containing this SDK:
    individual contributors to endorse a derived product without permission.
 
 Upstream licensing information: https://opus-codec.org/license/
+
+The JNI wrapper and Java API are maintained separately from the upstream Opus
+source. Their ownership and licensing must be declared by the SDK publisher;
+the Opus BSD license above applies to the redistributed Opus component.

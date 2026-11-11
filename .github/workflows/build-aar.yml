@@ -50,6 +50,9 @@ jobs:
       ORG_GRADLE_PROJECT_artifactory_password: ${{ secrets.ARTIFACTORY_PASSWORD }}
     steps:
       - uses: actions/checkout@v4
+      - name: Verify release tag matches SDK version
+        shell: pwsh
+        run: .\scripts\verify-release-tag.ps1 -Tag $env:GITHUB_REF_NAME
       - uses: actions/setup-java@v4
         with:
           distribution: temurin

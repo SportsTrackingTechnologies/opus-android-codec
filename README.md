@@ -1,6 +1,6 @@
 # Opus Android SDK
 
-Reproducible Android AAR packaging for the pinned Opus reference
+Repeatable Android AAR packaging for the pinned Opus reference
 implementation and a small JNI decoder wrapper.
 
 ## Build
@@ -13,7 +13,9 @@ Install the versions in [docs/BUILDING.md](docs/BUILDING.md), then run:
 
 The output is `artifacts/opus-android-sdk-<version>.aar`, accompanied by a
 SHA-256 checksum. The SDK ships `arm64-v8a`, `armeabi-v7a`, and `x86_64` native
-libraries. Edit `opus-sdk/build.gradle.kts` if the supported ABI set changes.
+libraries. This ABI set intentionally excludes 32-bit `x86`; `x86_64` is kept
+for 64-bit emulator coverage. Edit `opus-sdk/build.gradle.kts` and
+`scripts/verify-aar.ps1` together if the supported ABI set changes.
 
 ## Maven consumption
 
@@ -35,6 +37,11 @@ version, for example `v1.6.1-96-g677070ed0-r5`. The workflow builds and
 verifies the AAR first, then publishes it to the company JFrog release
 repository. Publishing credentials are held only in GitHub Actions Secrets;
 they are never configured in this repository or shared with consumers.
+
+The CI workflow rejects a release tag that does not exactly match the SDK
+version derived from `gradle.properties`. See
+[`docs/VERSIONING.md`](docs/VERSIONING.md) for the version format and revision
+rules.
 
 The one-time GitHub configuration is documented in
 [`docs/RELEASE.md`](docs/RELEASE.md).
