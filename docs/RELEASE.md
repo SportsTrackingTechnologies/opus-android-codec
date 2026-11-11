@@ -13,8 +13,8 @@
 6. Push the exact release tag to trigger GitHub Actions publication:
 
    ```powershell
-   rtk proxy git tag v<opus-upstream-describe>-rN
-   rtk proxy git push origin v<opus-upstream-describe>-rN
+   git tag v<opus-upstream-describe>-rN
+   git push origin v<opus-upstream-describe>-rN
    ```
 
    The workflow first runs `Build AAR`, then publishes the release AAR to JFrog
