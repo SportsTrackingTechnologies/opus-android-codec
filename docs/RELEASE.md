@@ -5,7 +5,7 @@
    the official Opus describe value and updates pinned provenance metadata.
 2. Increase `opusWrapperRevision` in `gradle.properties` if JNI or packaging
    changes without an Opus source update. The AAR version is derived as
-   `<opus-upstream-describe>-rN`, for example `1.6.1-96-g677070ed0-r6`.
+   `<opus-upstream-describe>-rN`, for example `1.6.1-96-g677070ed0-r7`.
 3. If updating Opus, update the vendored source, `UPSTREAM.json`, this
    project's tests, and `docs/BUILDING.md` together.
 4. Build with `scripts/build-aar.ps1` on a clean checkout.

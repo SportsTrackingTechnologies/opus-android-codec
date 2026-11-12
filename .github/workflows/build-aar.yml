@@ -31,7 +31,7 @@ jobs:
         run: .\scripts\build-aar.ps1
       - uses: actions/upload-artifact@v4
         with:
-          name: opus-android-sdk
+          name: opus-android-codec
           path: |
             artifacts/*.aar
             artifacts/*.aar.sha256

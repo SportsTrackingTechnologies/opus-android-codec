@@ -30,6 +30,6 @@ CMake/Gradle packaging, ABI support, compiler options, licenses packaged in the
 AAR, or build verification rules.
 
 Each release tag must be exactly `v<SDK version>`, for example
-`v1.6.1-96-g677070ed0-r6`. Run `scripts/verify-release-tag.ps1` before creating
+`v1.6.1-96-g677070ed0-r7`. Run `scripts/verify-release-tag.ps1` before creating
 the tag so the tag, Maven POM, AAR filename, and recorded source provenance
 remain traceable to the same SDK version.

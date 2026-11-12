@@ -13,7 +13,7 @@ From the repository root, install the versions in
 .\scripts\build-aar.ps1
 ```
 
-The output is `artifacts/opus-android-sdk-<version>.aar`, accompanied by a
+The output is `artifacts/opus-android-codec-<version>.aar`, accompanied by a
 SHA-256 checksum file. Use the checksum to verify the integrity of a downloaded
 AAR before integration. The SDK ships `arm64-v8a`, `armeabi-v7a`, and `x86_64`
 native libraries. This ABI set intentionally excludes 32-bit `x86`; `x86_64` is
@@ -34,7 +34,7 @@ then depend on the SDK using a released version:
 
 ```kotlin
 dependencies {
-    implementation("com.stt.opus:opus-android-sdk:<version>")
+    implementation("com.stt.opus:opus-android-codec:<version>")
 }
 ```
 

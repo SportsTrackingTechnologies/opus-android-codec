@@ -77,7 +77,7 @@ afterEvaluate {
         publications {
             register<MavenPublication>("release") {
                 from(components["release"])
-                artifactId = "opus-android-sdk"
+                artifactId = "opus-android-codec"
                 pom {
                     name.set("Opus Android SDK")
                     description.set("Android AAR packaging of pinned Opus source with a JNI decoder API.")

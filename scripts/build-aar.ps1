@@ -27,7 +27,7 @@ if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 $artifactDirectory = Join-Path $repoRoot 'artifacts'
 New-Item -ItemType Directory -Force -Path $artifactDirectory | Out-Null
 $aar = Join-Path $repoRoot 'opus-sdk\build\outputs\aar\opus-sdk-release.aar'
-$artifactName = "opus-android-sdk-$sdkVersion.aar"
+$artifactName = "opus-android-codec-$sdkVersion.aar"
 $artifactPath = Join-Path $artifactDirectory $artifactName
 Copy-Item -LiteralPath $aar -Destination $artifactPath -Force
 & (Join-Path $PSScriptRoot 'verify-aar.ps1') -AarPath $artifactPath

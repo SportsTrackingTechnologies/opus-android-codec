@@ -51,6 +51,6 @@ Install the exact NDK and CMake above through Android SDK Manager, then run:
 ```
 
 The artifact is written to
-`artifacts/opus-android-sdk-<opus-upstream-describe>-rN.aar`.
+`artifacts/opus-android-codec-<opus-upstream-describe>-rN.aar`.
 Run `scripts/verify-aar.ps1` to verify the ABI set and emit a SHA-256 checksum.
 It also verifies 16 KB ELF LOAD alignment for the 64-bit native libraries.
