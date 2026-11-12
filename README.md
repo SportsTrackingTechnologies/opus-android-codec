@@ -45,20 +45,27 @@ documented in [`docs/VERSIONING.md`](docs/VERSIONING.md).
 
 ## Release publishing
 
-Normal releases are published only by GitHub Actions. A maintainer validates
-the release locally, then pushes a version tag matching the derived SDK version,
-for example `v1.6.1-96-g677070ed0-r5`. The workflow builds and verifies the AAR
-first, then publishes it to the company JFrog release repository. JFrog
-publishing credentials are stored exclusively in GitHub Actions Secrets; they
-are never committed to this repository or distributed to SDK consumers.
+Releases are published manually by an authorized maintainer from a verified
+local checkout. Configure the following values in the user's
+`~/.gradle/gradle.properties`; never commit them to this repository:
 
-The CI workflow rejects a release tag that does not exactly match the SDK
-version derived from `gradle.properties`. See
-[`docs/VERSIONING.md`](docs/VERSIONING.md) for the version format and revision
-rules.
+```properties
+artifactory_contextUrl=https\://sally01.jfrog.io/sally01
+artifactory_user=...
+artifactory_password=...
+```
 
-The one-time GitHub configuration is documented in
-[`docs/RELEASE.md`](docs/RELEASE.md).
+Then run:
+
+```powershell
+.\gradlew.bat publishAll
+```
+
+`publishAll` publishes the release AAR, sources JAR, Maven POM, and Gradle
+module metadata to the company JFrog release repository. The exact local
+release procedure, including tag verification, is documented in
+[`docs/RELEASE.md`](docs/RELEASE.md). GitHub Actions only builds and verifies
+the AAR; it does not publish artifacts or receive JFrog credentials.
 
 ## Provenance
 

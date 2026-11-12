@@ -3,3 +3,9 @@ plugins {
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.android.library) apply false
 }
+
+tasks.register("publishAll") {
+    group = "publishing"
+    description = "Publishes the release Opus Android AAR to the configured JFrog repository."
+    dependsOn(":opus-sdk:publishReleasePublicationToJfrogRepository")
+}
